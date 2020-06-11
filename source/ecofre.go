@@ -32,8 +32,8 @@ func main() {
 		// Map the handlers to callback functions, and connect the signals
 		// to the Builder.
 		signals := map[string]interface{}{
-			"on_window_main_destroy": onMainWindowDestroy,
-			"on_test_button_clicked": clickedTestButton,
+			"on_window_main_destroy":    onMainWindowDestroy,
+			"button_key_add_clicked_cb": clickedTestButton,
 		}
 		builder.ConnectSignals(signals)
 
@@ -84,5 +84,30 @@ func onMainWindowDestroy() {
 }
 
 func clickedTestButton() {
-	fmt.Println("Testclick")
+	showMessageInfo("Test!")
+	showMessageError("Test Error!")
+}
+
+func showMessageInfo(message string) {
+	fmt.Println(message)
+
+	dialog := gtk.MessageDialogNew(nil,
+		gtk.DIALOG_MODAL,
+		gtk.MESSAGE_INFO,
+		gtk.BUTTONS_OK,
+		message)
+	dialog.Run()
+	dialog.Destroy()
+}
+
+func showMessageError(message string) {
+	fmt.Println(message)
+
+	dialog := gtk.MessageDialogNew(nil,
+		gtk.DIALOG_MODAL,
+		gtk.MESSAGE_ERROR,
+		gtk.BUTTONS_OK,
+		message)
+	dialog.Run()
+	dialog.Destroy()
 }
